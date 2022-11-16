@@ -6,6 +6,7 @@
     <!-- Required meta tags-->
     <meta charset="utf-8">
     <title>Thomas Onyemechi Gideon</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <meta nDescriptioname="description" content="Thomas Onyemechi Gideon Porfolio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="I am a PHP Developer with more than 3 years of experience working with PHP, 
@@ -393,7 +394,7 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6 form-group"><input class="form-control" id="name" type="text" name="name" placeholder="Name" required=""></div>
                                             <div class="col-12 col-md-6 form-group"><input class="form-control" id="email" type="email" name="email" placeholder="Email" required=""></div>
-                                            <div class="col-12 form-group"><input class="form-control" id="subject" type="text" name="subject" placeholder="Subject" required=""></div>
+                                            <div class="col-12 form-group"><input class="form-control" id="phone" type="text" name="phone" placeholder="phone" required=""></div>
                                             <div class="col-12 form-group form-message"><textarea class="form-control" id="message" name="message" placeholder="Message" rows="5" required=""></textarea></div>
                                             <div class="col-12 form-submit"><button class="btn button-main button-scheme" type="submit">Send Message</button>
                                                 <p class="contact-feedback"></p>
@@ -464,26 +465,17 @@
         $(function() {
             function sendMail() {
                 from_email = $('#email').val();
-                subject = $('#subject').val();
+                phone = $('#phone').val();
                 name = $('#name').val();
-                message = `Name:<b> ${name}</b>. <br> <b>Message</b> <br> ${$('#message').val()}`;
-                console.log(message);
+                message = $('#message');
                 $.ajax({
                     type: 'POST',
-                    url: 'https://mandrillapp.com/api/1.0/messages/send.json',
+                    url: 'http://127.0.0.1:803/api/send_to_me',
                     data: {
-                        'key': 'YOUR API KEY HERE',
-                        'message': {
-                            'from_email': from_email,
-                            'to': [{
-                                'email': 'thomasonyemechi03@gmail.com',
-                                'name': 'From Portfolio To Me',
-                                'type': 'to'
-                            }],
-                            'autotext': 'true',
-                            'subject': subject,
-                            'html': message
-                        }
+                        name: name,
+                        email: email,
+                        message: message,
+                        phone: phone
                     }
                 }).done(function(response) {
                     console.log(response); // if you're into that sorta thing
@@ -496,9 +488,41 @@
 
             $('.button-main').on('click', function(e) {
                 e.preventDefault();
-                sendMail();
+
+                from_email = $('#email').val();
+                phone = $('#phone').val();
+                name = $('#name').val();
+                message = $('#message').val();
+                axios.post('http://127.0.0.1:803/api/send_to_me', {
+                    email: from_email,
+                    phone: phone,
+                    name: name,
+                    message: message
+                })
+                .then(function(response) {
+                    console.log(response);
+                    alert("Your message has been sent!");
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    alert("An error occured! Please try again");
+                });
             })
         })
+    </script>
+
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/62d56581b0d10b6f3e7ce9b7/1g88p9190';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
     </script>
 
 </body>
