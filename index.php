@@ -470,7 +470,7 @@
                 message = $('#message');
                 $.ajax({
                     type: 'POST',
-                    url: 'http://127.0.0.1:803/api/send_to_me',
+                    url: 'https://familyconcepts1.com/api/send_to_me',
                     data: {
                         name: name,
                         email: email,
